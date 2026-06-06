@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>关于我 | Nightdreamsyo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  min-height:100vh;
+  font-family:"Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg, #09111f 0%, #050816 100%);
+  color:#e5eefc;
+  padding:24px;
+}
+.lang-switcher{
+  position:fixed;
+  top:18px;
+  right:18px;
+  z-index:40;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  background:rgba(8,12,24,.68);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(10px);
+}
+.lang-switcher label{
+  color:#cbd5e1;
+  font-size:.92rem;
+  white-space:nowrap;
+}
+.lang-switcher select{
+  border:none;
+  outline:none;
+  background:transparent;
+  color:#fff;
+  font-size:.92rem;
+  cursor:pointer;
+  appearance:none;
+}
+.lang-switcher option{ color:#000; }
+.page{
+  width:min(100%, 920px);
+  min-height:calc(100vh - 48px);
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+textarea{
+  width:100%;
+  min-height:72vh;
+  resize:vertical;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(8,12,24,.86);
+  color:#fff;
+  padding:18px;
+  font-size:1rem;
+  line-height:1.8;
+  outline:none;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+textarea:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 0 3px rgba(56,189,248,.18), 0 20px 60px rgba(0,0,0,.3);
+}
+</style>
+</head>
+<body>
+<div class="lang-switcher">
+  <label for="language-select">Language</label>
+  <select id="language-select" aria-label="Language">
+    <option value="zh-CN">简体中文</option>
+    <option value="zh-TW">繁體中文</option>
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <option value="ru">Русский</option>
+  </select>
+</div>
+
+<main class="page">
+  <textarea id="about-text" placeholder="在这里写入你的关于我内容..."></textarea>
+</main>
+
+<script>
+  const translations = {
+    'zh-CN': {
+      title: '关于我 | Nightdreamsyo',
+      placeholder: '在这里写入你的关于我内容...'
+    },
+    'zh-TW': {
+      title: '關於我 | Nightdreamsyo',
+      placeholder: '在這裡寫入你的關於我內容...'
+    },
+    en: {
+      title: 'About Me | Nightdreamsyo',
+      placeholder: 'Write your About Me content here...'
+    },
+    fr: {
+      title: 'À propos de moi | Nightdreamsyo',
+      placeholder: 'Écrivez ici le contenu de votre section À propos de moi...'
+    },
+    ru: {
+      title: 'Обо мне | Nightdreamsyo',
+      placeholder: 'Введите здесь текст для раздела «Обо мне»...'
+    }
+  };
+
+  function getLang() {
+    const params = new URLSearchParams(location.search);
+    const fromUrl = params.get('lang');
+    if (fromUrl && translations[fromUrl]) return fromUrl;
+    const saved = localStorage.getItem('site-lang');
+    return translations[saved] ? saved : 'zh-CN';
+  }
+
+  function setLang(lang) {
+    const t = translations[lang] || translations['zh-CN'];
+    localStorage.setItem('site-lang', lang);
+    document.documentElement.lang = lang;
+    document.title = t.title;
+    document.getElementById('about-text').placeholder = t.placeholder;
+    document.getElementById('language-select').value = lang;
+    const url = new URL(location.href);
+    url.searchParams.set('lang', lang);
+    history.replaceState(null, '', url);
+  }
+
+  document.getElementById('language-select').addEventListener('change', (event) => {
+    setLang(event.target.value);
+  });
+
+  setLang(getLang());
+</script>
+</body>
+</html>
