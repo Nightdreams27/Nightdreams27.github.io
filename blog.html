@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>博客 | Nightdreamsyo</title>
+<style>
+:root{--bg:#f3f7fb;--bg2:#d9e6f5;--panel:rgba(255,255,255,.72);--panel-border:rgba(15,23,42,.12);--text:#0f172a;--muted:#475569;--accent:#0ea5e9;--accent-2:#fb7185;--card:#fff;--shadow:0 20px 60px rgba(15,23,42,.12);}
+body[data-theme="dark"]{--bg:#06101d;--bg2:#0b1c31;--panel:rgba(7,14,28,.72);--panel-border:rgba(255,255,255,.10);--text:#e5eefc;--muted:#b6c2d4;--accent:#38bdf8;--accent-2:#fb7185;--card:rgba(255,255,255,.05);--shadow:0 24px 70px rgba(0,0,0,.35);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{min-height:100vh;font-family:"Microsoft YaHei",sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);}
+.topbar{position:fixed;top:16px;right:16px;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-border);backdrop-filter:blur(12px);box-shadow:var(--shadow);}
+.topbar label{font-size:.9rem;color:var(--muted);}
+.topbar select,.topbar button{border:none;outline:none;background:transparent;color:var(--text);cursor:pointer;font-size:.9rem;}
+.topbar button{padding:4px 10px;border-radius:999px;background:rgba(56,189,248,.16);}
+.wrap{width:min(1100px,92vw);margin:0 auto;padding:100px 0 40px;}
+.back{display:inline-block;margin-bottom:18px;text-decoration:none;color:var(--text);padding:10px 16px;border-radius:999px;border:1px solid var(--panel-border);background:rgba(255,255,255,.08);}
+.back:hover{background:rgba(56,189,248,.16);}
+.hero{background:var(--card);border:1px solid var(--panel-border);border-radius:22px;padding:24px;box-shadow:var(--shadow);margin-bottom:18px;}
+.hero h1{color:var(--accent);margin-bottom:10px;}
+.hero p{color:var(--muted);line-height:1.8;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.post{background:var(--card);border:1px solid var(--panel-border);border-radius:22px;padding:20px;box-shadow:var(--shadow);transition:.2s;}
+.post:hover{transform:translateY(-3px);background:rgba(56,189,248,.14);}
+.meta{color:var(--muted);font-size:.9rem;margin-bottom:10px;}
+.post h2{color:var(--accent);margin-bottom:10px;font-size:1.2rem;}
+.post p{line-height:1.8;color:var(--text);}
+.tag{display:inline-block;margin-top:12px;padding:6px 10px;border-radius:999px;background:rgba(56,189,248,.16);color:var(--text);font-size:.85rem;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <label for="lang">Language</label>
+  <select id="lang">
+    <option value="zh-CN">简体中文</option>
+    <option value="zh-TW">繁體中文</option>
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <option value="ru">Русский</option>
+  </select>
+  <button id="themeBtn" type="button">深色</button>
+</div>
+
+<div class="wrap">
+  <a class="back" href="index.html">返回首页</a>
+  <div class="hero">
+    <h1 id="pageTitle">博客</h1>
+    <p id="pageDesc">记录学习、赛车、汽车技术和生活里的小想法。</p>
+  </div>
+
+  <div class="grid" id="posts"></div>
+</div>
+
+<script>
+const texts={
+  'zh-CN':{title:'博客 | Nightdreamsyo',back:'返回首页',pageTitle:'博客',pageDesc:'记录学习、赛车、汽车技术和生活里的小想法。',themeLight:'浅色',themeDark:'深色',posts:[
+    {date:'2026-06-07',title:'最近在做的网站更新',body:'把主页改成了多语言、加了留言板和博客页，也把相册和主题切换都整理了一遍。',tag:'网站'},
+    {date:'2026-06-07',title:'赛车和汽车技术',body:'我一直很喜欢赛车和汽车技术，所以主页背景也选了更偏赛车风格的视觉。',tag:'兴趣'},
+    {date:'2026-06-07',title:'语言学习笔记',body:'法语、英语和其他语言的学习内容以后也可以慢慢加进来，做成自己的学习记录。',tag:'学习'}
+  ]},
+  'zh-TW':{title:'博客 | Nightdreamsyo',back:'返回首頁',pageTitle:'博客',pageDesc:'記錄學習、賽車、汽車技術和生活裡的小想法。',themeLight:'淺色',themeDark:'深色',posts:[
+    {date:'2026-06-07',title:'最近在做的網站更新',body:'把主頁改成了多語言、加了留言板和博客頁，也把相冊和主題切換都整理了一遍。',tag:'網站'},
+    {date:'2026-06-07',title:'賽車和汽車技術',body:'我一直很喜歡賽車和汽車技術，所以主頁背景也選了更偏賽車風格的視覺。',tag:'興趣'},
+    {date:'2026-06-07',title:'語言學習筆記',body:'法語、英語和其他語言的學習內容以後也可以慢慢加進來，做成自己的學習記錄。',tag:'學習'}
+  ]},
+  en:{title:'Blog | Nightdreamsyo',back:'Back to Home',pageTitle:'Blog',pageDesc:'Notes about studying, racing, automotive tech, and everyday life.',themeLight:'Light',themeDark:'Dark',posts:[
+    {date:'2026-06-07',title:'Recent site updates',body:'I turned the homepage into a multilingual site, added a guestbook and this blog page, and organized the galleries and theme switcher.',tag:'Site'},
+    {date:'2026-06-07',title:'Racing and automotive tech',body:'I have always loved racing and automotive technology, so the homepage background is now more race-inspired.',tag:'Interest'},
+    {date:'2026-06-07',title:'Language learning notes',body:'French, English, and other language learning notes can gradually be added here as a personal record.',tag:'Study'}
+  ]},
+  fr:{title:'Blog | Nightdreamsyo',back:'Retour à l’accueil',pageTitle:'Blog',pageDesc:'Notes sur les études, la course, la technologie automobile et la vie quotidienne.',themeLight:'Clair',themeDark:'Sombre',posts:[
+    {date:'2026-06-07',title:'Mises à jour du site',body:'J’ai transformé la page d’accueil en site multilingue, ajouté un livre d’or et cette page de blog.',tag:'Site'},
+    {date:'2026-06-07',title:'Course et technologie automobile',body:'J’aime depuis toujours la course et la technologie automobile, donc l’arrière-plan du site est plus inspiré par la course.',tag:'Intérêt'},
+    {date:'2026-06-07',title:'Notes d’apprentissage des langues',body:'Les notes de français, d’anglais et d’autres langues pourront être ajoutées progressivement ici.',tag:'Étude'}
+  ]},
+  ru:{title:'Блог | Nightdreamsyo',back:'Назад на главную',pageTitle:'Блог',pageDesc:'Заметки об учёбе, гонках, автомобильных технологиях и повседневной жизни.',themeLight:'Светлая',themeDark:'Тёмная',posts:[
+    {date:'2026-06-07',title:'Недавние обновления сайта',body:'Я сделал главную страницу многоязычной, добавил гостевую книгу и эту страницу блога.',tag:'Сайт'},
+    {date:'2026-06-07',title:'Гонки и автомобильные технологии',body:'Мне всегда нравились гонки и автомобильные технологии, поэтому фон сайта стал более гоночным.',tag:'Интерес'},
+    {date:'2026-06-07',title:'Заметки по изучению языков',body:'Заметки по французскому, английскому и другим языкам можно постепенно добавлять сюда.',tag:'Учёба'}
+  ]}
+};
+function getLang(){const p=new URLSearchParams(location.search).get('lang');if(p&&texts[p])return p;const s=localStorage.getItem('site-lang');return texts[s]?s:'zh-CN';}
+function setLang(lang){const t=texts[lang]||texts['zh-CN'];localStorage.setItem('site-lang',lang);document.documentElement.lang=lang;document.title=t.title;document.querySelector('.back').textContent=t.back;document.getElementById('pageTitle').textContent=t.pageTitle;document.getElementById('pageDesc').textContent=t.pageDesc;document.getElementById('lang').value=lang;document.getElementById('themeBtn').textContent=document.body.dataset.theme==='dark'?t.themeDark:t.themeLight;render();const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);}
+function applyTheme(theme){document.body.dataset.theme=theme;localStorage.setItem('site-theme',theme);document.getElementById('themeBtn').textContent=(texts[getLang()]||texts['zh-CN'])[theme==='dark'?'themeDark':'themeLight'];}
+function render(){const t=texts[getLang()]||texts['zh-CN'];const posts=document.getElementById('posts');posts.innerHTML=t.posts.map(p=>`<article class="post"><div class="meta">${p.date}</div><h2>${p.title}</h2><p>${p.body}</p><span class="tag">${p.tag}</span></article>`).join('');}
+document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
+document.getElementById('themeBtn').addEventListener('click',()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark'));
+applyTheme(localStorage.getItem('site-theme')||'light');
+setLang(getLang());
+</script>
+</body>
+</html>

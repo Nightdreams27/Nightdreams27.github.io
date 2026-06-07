@@ -5,136 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>关于我 | Nightdreamsyo</title>
 <style>
+:root{
+  --bg:#f3f7fb;--bg2:#d9e6f5;--panel:rgba(255,255,255,.72);--panel-border:rgba(15,23,42,.12);--text:#0f172a;--muted:#475569;--accent:#0ea5e9;--card:#fff;--shadow:0 20px 60px rgba(15,23,42,.12);
+}
+body[data-theme="dark"]{
+  --bg:#06101d;--bg2:#0b1c31;--panel:rgba(7,14,28,.72);--panel-border:rgba(255,255,255,.10);--text:#e5eefc;--muted:#b6c2d4;--accent:#38bdf8;--card:rgba(255,255,255,.05);--shadow:0 24px 70px rgba(0,0,0,.35);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   min-height:100vh;
   font-family:"Microsoft YaHei",sans-serif;
-  background:linear-gradient(180deg, #09111f 0%, #050816 100%);
-  color:#e5eefc;
-  padding:24px;
+  color:var(--text);
+  background:linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
 }
-.lang-switcher{
-  position:fixed;
-  top:18px;
-  right:18px;
-  z-index:40;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:999px;
-  background:rgba(8,12,24,.68);
-  border:1px solid rgba(255,255,255,.14);
-  backdrop-filter:blur(10px);
+.topbar{
+  position:fixed;top:16px;right:16px;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-border);backdrop-filter:blur(12px);box-shadow:var(--shadow);
 }
-.lang-switcher label{
-  color:#cbd5e1;
-  font-size:.92rem;
-  white-space:nowrap;
+.topbar label{font-size:.9rem;color:var(--muted);}
+.topbar select,.topbar button{border:none;outline:none;background:transparent;color:var(--text);cursor:pointer;font-size:.9rem;}
+.topbar button{padding:4px 10px;border-radius:999px;background:rgba(56,189,248,.16);}
+.wrap{width:min(920px,92vw);margin:0 auto;padding:100px 0 40px;}
+.card{background:var(--card);border:1px solid var(--panel-border);border-radius:22px;padding:24px;box-shadow:var(--shadow);}
+.back{
+  display:inline-block;margin-bottom:18px;text-decoration:none;color:var(--text);padding:10px 16px;border-radius:999px;border:1px solid var(--panel-border);background:rgba(255,255,255,.08);
 }
-.lang-switcher select{
-  border:none;
-  outline:none;
-  background:transparent;
-  color:#fff;
-  font-size:.92rem;
-  cursor:pointer;
-  appearance:none;
-}
-.lang-switcher option{ color:#000; }
-.page{
-  width:min(100%, 920px);
-  min-height:calc(100vh - 48px);
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+.back:hover{background:rgba(56,189,248,.16);}
+h1{color:var(--accent);margin-bottom:14px;}
 textarea{
-  width:100%;
-  min-height:72vh;
-  resize:vertical;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(8,12,24,.86);
-  color:#fff;
-  padding:18px;
-  font-size:1rem;
-  line-height:1.8;
-  outline:none;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  width:100%;min-height:72vh;resize:vertical;border-radius:18px;border:1px solid var(--panel-border);background:rgba(8,12,24,.86);color:#fff;padding:18px;font-size:1rem;line-height:1.8;outline:none;
 }
-textarea:focus{
-  border-color:#38bdf8;
-  box-shadow:0 0 0 3px rgba(56,189,248,.18), 0 20px 60px rgba(0,0,0,.3);
-}
+textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,.18);}
 </style>
 </head>
 <body>
-<div class="lang-switcher">
-  <label for="language-select">Language</label>
-  <select id="language-select" aria-label="Language">
+<div class="topbar">
+  <label for="lang">Language</label>
+  <select id="lang">
     <option value="zh-CN">简体中文</option>
     <option value="zh-TW">繁體中文</option>
     <option value="en">English</option>
     <option value="fr">Français</option>
     <option value="ru">Русский</option>
   </select>
+  <button id="themeBtn" type="button">深色</button>
 </div>
 
-<main class="page">
-  <textarea id="about-text" placeholder="在这里写入你的关于我内容..."></textarea>
-</main>
+<div class="wrap">
+  <a class="back" href="index.html">返回首页</a>
+  <div class="card">
+    <h1 id="title">关于我</h1>
+    <textarea id="about-text" placeholder="在这里写入你的关于我内容..."></textarea>
+  </div>
+</div>
 
 <script>
-  const translations = {
-    'zh-CN': {
-      title: '关于我 | Nightdreamsyo',
-      placeholder: '在这里写入你的关于我内容...'
-    },
-    'zh-TW': {
-      title: '關於我 | Nightdreamsyo',
-      placeholder: '在這裡寫入你的關於我內容...'
-    },
-    en: {
-      title: 'About Me | Nightdreamsyo',
-      placeholder: 'Write your About Me content here...'
-    },
-    fr: {
-      title: 'À propos de moi | Nightdreamsyo',
-      placeholder: 'Écrivez ici le contenu de votre section À propos de moi...'
-    },
-    ru: {
-      title: 'Обо мне | Nightdreamsyo',
-      placeholder: 'Введите здесь текст для раздела «Обо мне»...'
-    }
-  };
-
-  function getLang() {
-    const params = new URLSearchParams(location.search);
-    const fromUrl = params.get('lang');
-    if (fromUrl && translations[fromUrl]) return fromUrl;
-    const saved = localStorage.getItem('site-lang');
-    return translations[saved] ? saved : 'zh-CN';
-  }
-
-  function setLang(lang) {
-    const t = translations[lang] || translations['zh-CN'];
-    localStorage.setItem('site-lang', lang);
-    document.documentElement.lang = lang;
-    document.title = t.title;
-    document.getElementById('about-text').placeholder = t.placeholder;
-    document.getElementById('language-select').value = lang;
-    const url = new URL(location.href);
-    url.searchParams.set('lang', lang);
-    history.replaceState(null, '', url);
-  }
-
-  document.getElementById('language-select').addEventListener('change', (event) => {
-    setLang(event.target.value);
-  });
-
-  setLang(getLang());
+const texts={
+  'zh-CN':{title:'关于我 | Nightdreamsyo',placeholder:'在这里写入你的关于我内容...',back:'返回首页',themeLight:'浅色',themeDark:'深色'},
+  'zh-TW':{title:'關於我 | Nightdreamsyo',placeholder:'在這裡寫入你的關於我內容...',back:'返回首頁',themeLight:'淺色',themeDark:'深色'},
+  en:{title:'About Me | Nightdreamsyo',placeholder:'Write your About Me content here...',back:'Back to Home',themeLight:'Light',themeDark:'Dark'},
+  fr:{title:'À propos de moi | Nightdreamsyo',placeholder:'Écrivez ici le contenu de votre section À propos de moi...',back:'Retour à l’accueil',themeLight:'Clair',themeDark:'Sombre'},
+  ru:{title:'Обо мне | Nightdreamsyo',placeholder:'Введите здесь текст для раздела «Обо мне»...',back:'Назад на главную',themeLight:'Светлая',themeDark:'Тёмная'}
+};
+function getLang(){const p=new URLSearchParams(location.search).get('lang');if(p&&texts[p])return p;const s=localStorage.getItem('site-lang');return texts[s]?s:'zh-CN';}
+function setLang(lang){const t=texts[lang]||texts['zh-CN'];localStorage.setItem('site-lang',lang);document.documentElement.lang=lang;document.title=t.title;document.getElementById('title').textContent=t.title.split(' | ')[0];document.getElementById('about-text').placeholder=t.placeholder;document.querySelector('.back').textContent=t.back;document.getElementById('lang').value=lang;document.getElementById('themeBtn').textContent=document.body.dataset.theme==='dark'?t.themeDark:t.themeLight;const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);}
+function applyTheme(theme){document.body.dataset.theme=theme;localStorage.setItem('site-theme',theme);document.getElementById('themeBtn').textContent=(texts[getLang()]||texts['zh-CN'])[theme==='dark'?'themeDark':'themeLight'];}
+document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
+document.getElementById('themeBtn').addEventListener('click',()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark'));
+applyTheme(localStorage.getItem('site-theme')||'light');
+setLang(getLang());
 </script>
 </body>
 </html>

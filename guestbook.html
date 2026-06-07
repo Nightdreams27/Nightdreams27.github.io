@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>留言板 | Nightdreamsyo</title>
+<style>
+:root{--bg:#f3f7fb;--bg2:#d9e6f5;--panel:rgba(255,255,255,.72);--panel-border:rgba(15,23,42,.12);--text:#0f172a;--muted:#475569;--accent:#0ea5e9;--accent-2:#fb7185;--card:#fff;--shadow:0 20px 60px rgba(15,23,42,.12);}
+body[data-theme="dark"]{--bg:#06101d;--bg2:#0b1c31;--panel:rgba(7,14,28,.72);--panel-border:rgba(255,255,255,.10);--text:#e5eefc;--muted:#b6c2d4;--accent:#38bdf8;--accent-2:#fb7185;--card:rgba(255,255,255,.05);--shadow:0 24px 70px rgba(0,0,0,.35);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{min-height:100vh;font-family:"Microsoft YaHei",sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);}
+.topbar{position:fixed;top:16px;right:16px;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-border);backdrop-filter:blur(12px);box-shadow:var(--shadow);}
+.topbar label{font-size:.9rem;color:var(--muted);}
+.topbar select,.topbar button{border:none;outline:none;background:transparent;color:var(--text);cursor:pointer;font-size:.9rem;}
+.topbar button{padding:4px 10px;border-radius:999px;background:rgba(56,189,248,.16);}
+.wrap{width:min(1000px,92vw);margin:0 auto;padding:100px 0 40px;}
+.back{display:inline-block;margin-bottom:18px;text-decoration:none;color:var(--text);padding:10px 16px;border-radius:999px;border:1px solid var(--panel-border);background:rgba(255,255,255,.08);}
+.back:hover{background:rgba(56,189,248,.16);}
+.hero{background:var(--card);border:1px solid var(--panel-border);border-radius:22px;padding:24px;box-shadow:var(--shadow);margin-bottom:18px;}
+.hero h1{color:var(--accent);margin-bottom:10px;}
+.hero p{color:var(--muted);line-height:1.8;}
+.layout{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;}
+@media (max-width: 860px){.layout{grid-template-columns:1fr;}}
+.panel{background:var(--card);border:1px solid var(--panel-border);border-radius:22px;padding:22px;box-shadow:var(--shadow);}
+.panel h2{color:var(--accent);margin-bottom:14px;}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.field label{color:var(--muted);font-size:.95rem;}
+.field input,.field textarea{
+  width:100%;border-radius:14px;border:1px solid var(--panel-border);background:rgba(8,12,24,.86);color:#fff;padding:12px 14px;font-size:1rem;outline:none;
+}
+.field textarea{min-height:140px;resize:vertical;}
+.field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,.18);}
+.submit{
+  border:none;border-radius:999px;padding:11px 18px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;cursor:pointer;box-shadow:0 12px 28px rgba(15,23,42,.12);
+}
+.submit:hover{opacity:.96;}
+.entries{display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow:auto;padding-right:4px;}
+.entry{background:rgba(255,255,255,.06);border:1px solid var(--panel-border);border-radius:16px;padding:14px;}
+.entry-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:8px;}
+.entry-user{font-weight:700;color:var(--accent);}
+.entry-time{color:var(--muted);font-size:.86rem;}
+.entry-text{white-space:pre-wrap;line-height:1.75;}
+.empty{color:var(--muted);padding:12px 2px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <label for="lang">Language</label>
+  <select id="lang">
+    <option value="zh-CN">简体中文</option>
+    <option value="zh-TW">繁體中文</option>
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <option value="ru">Русский</option>
+  </select>
+  <button id="themeBtn" type="button">深色</button>
+</div>
+
+<div class="wrap">
+  <a class="back" href="index.html">返回首页</a>
+  <div class="hero">
+    <h1 id="pageTitle">留言板</h1>
+    <p id="pageDesc">在这里留下你的名字和想说的话，留言会显示用户名，并保存在当前浏览器里。</p>
+  </div>
+
+  <div class="layout">
+    <section class="panel">
+      <h2 id="formTitle">写留言</h2>
+      <div class="field">
+        <label for="username" id="nameLabel">用户名</label>
+        <input id="username" type="text" placeholder="请输入你的用户名" />
+      </div>
+      <div class="field">
+        <label for="message" id="msgLabel">留言内容</label>
+        <textarea id="message" placeholder="想说什么都可以..."></textarea>
+      </div>
+      <button class="submit" id="sendBtn" type="button">提交留言</button>
+    </section>
+
+    <section class="panel">
+      <h2 id="listTitle">留言列表</h2>
+      <div id="entries" class="entries"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const texts={
+  'zh-CN':{title:'留言板 | Nightdreamsyo',back:'返回首页',pageTitle:'留言板',pageDesc:'在这里留下你的名字和想说的话，留言会显示用户名，并保存在当前浏览器里。',formTitle:'写留言',nameLabel:'用户名',msgLabel:'留言内容',namePH:'请输入你的用户名',msgPH:'想说什么都可以...',send:'提交留言',listTitle:'留言列表',empty:'还没有留言，先来写第一条吧。',themeLight:'浅色',themeDark:'深色'},
+  'zh-TW':{title:'留言板 | Nightdreamsyo',back:'返回首頁',pageTitle:'留言板',pageDesc:'在這裡留下你的名字和想說的話，留言會顯示用戶名，並保存在目前瀏覽器裡。',formTitle:'寫留言',nameLabel:'用戶名',msgLabel:'留言內容',namePH:'請輸入你的用戶名',msgPH:'想說什麼都可以...',send:'提交留言',listTitle:'留言列表',empty:'還沒有留言，先來寫第一條吧。',themeLight:'淺色',themeDark:'深色'},
+  en:{title:'Guestbook | Nightdreamsyo',back:'Back to Home',pageTitle:'Guestbook',pageDesc:'Leave your name and message here. Each entry shows the username and is saved in this browser.',formTitle:'Write a Message',nameLabel:'Username',msgLabel:'Message',namePH:'Enter your username',msgPH:'Anything you want to say...',send:'Submit',listTitle:'Messages',empty:'No messages yet. Be the first one!',themeLight:'Light',themeDark:'Dark'},
+  fr:{title:'Livre d’or | Nightdreamsyo',back:'Retour à l’accueil',pageTitle:'Livre d’or',pageDesc:'Laissez ici votre nom et votre message. Chaque message affiche le nom d’utilisateur et reste enregistré dans ce navigateur.',formTitle:'Écrire un message',nameLabel:'Nom d’utilisateur',msgLabel:'Message',namePH:'Entrez votre nom d’utilisateur',msgPH:'Écrivez ce que vous voulez...',send:'Envoyer',listTitle:'Messages',empty:'Aucun message pour le moment. Soyez le premier !',themeLight:'Clair',themeDark:'Sombre'},
+  ru:{title:'Гостевая книга | Nightdreamsyo',back:'Назад на главную',pageTitle:'Гостевая книга',pageDesc:'Оставьте здесь своё имя и сообщение. Каждая запись показывает имя пользователя и сохраняется в этом браузере.',formTitle:'Написать сообщение',nameLabel:'Имя пользователя',msgLabel:'Сообщение',namePH:'Введите ваше имя пользователя',msgPH:'Напишите всё, что хотите...',send:'Отправить',listTitle:'Сообщения',empty:'Пока сообщений нет. Будьте первым!',themeLight:'Светлая',themeDark:'Тёмная'}
+};
+const storageKey='guestbook-entries';
+function getLang(){const p=new URLSearchParams(location.search).get('lang');if(p&&texts[p])return p;const s=localStorage.getItem('site-lang');return texts[s]?s:'zh-CN';}
+function setLang(lang){
+  const t=texts[lang]||texts['zh-CN'];
+  localStorage.setItem('site-lang',lang);
+  document.documentElement.lang=lang;
+  document.title=t.title;
+  document.querySelector('.back').textContent=t.back;
+  document.getElementById('pageTitle').textContent=t.pageTitle;
+  document.getElementById('pageDesc').textContent=t.pageDesc;
+  document.getElementById('formTitle').textContent=t.formTitle;
+  document.getElementById('nameLabel').textContent=t.nameLabel;
+  document.getElementById('msgLabel').textContent=t.msgLabel;
+  document.getElementById('username').placeholder=t.namePH;
+  document.getElementById('message').placeholder=t.msgPH;
+  document.getElementById('sendBtn').textContent=t.send;
+  document.getElementById('listTitle').textContent=t.listTitle;
+  document.getElementById('lang').value=lang;
+  document.getElementById('themeBtn').textContent=document.body.dataset.theme==='dark'?t.themeDark:t.themeLight;
+  const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);
+  render();
+}
+function applyTheme(theme){document.body.dataset.theme=theme;localStorage.setItem('site-theme',theme);document.getElementById('themeBtn').textContent=(texts[getLang()]||texts['zh-CN'])[theme==='dark'?'themeDark':'themeLight'];}
+document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
+document.getElementById('themeBtn').addEventListener('click',()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark'));
+
+function loadEntries(){try{return JSON.parse(localStorage.getItem(storageKey)||'[]');}catch{return [];}}
+function saveEntries(entries){localStorage.setItem(storageKey,JSON.stringify(entries));}
+function fmtTime(ts){return new Date(ts).toLocaleString();}
+function render(){
+  const t=texts[getLang()]||texts['zh-CN'];
+  const entries=loadEntries();
+  const wrap=document.getElementById('entries');
+  if(!entries.length){wrap.innerHTML=`<div class="empty">${t.empty}</div>`;return;}
+  wrap.innerHTML=entries.map(e=>`
+    <article class="entry">
+      <div class="entry-head">
+        <div class="entry-user">${escapeHtml(e.user)}</div>
+        <div class="entry-time">${fmtTime(e.time)}</div>
+      </div>
+      <div class="entry-text">${escapeHtml(e.message)}</div>
+    </article>`).join('');
+}
+function escapeHtml(str){return String(str).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+document.getElementById('sendBtn').addEventListener('click',()=>{
+  const user=document.getElementById('username').value.trim();
+  const message=document.getElementById('message').value.trim();
+  if(!user||!message) return;
+  const entries=loadEntries();
+  entries.unshift({user,message,time:Date.now()});
+  saveEntries(entries);
+  document.getElementById('message').value='';
+  render();
+});
+applyTheme(localStorage.getItem('site-theme')||'light');
+setLang(getLang());
+</script>
+</body>
+</html>

@@ -5,184 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Nightdreamsyo | 个人主页</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#eef5fb;
+  --bg2:#d9e7f7;
+  --panel:rgba(255,255,255,.72);
+  --panel-border:rgba(15,23,42,.12);
+  --text:#0f172a;
+  --muted:#4b5b74;
+  --accent:#0ea5e9;
+  --accent-2:#fb7185;
+  --card:#ffffff;
+  --card-hover:#eef7ff;
+  --shadow:0 24px 60px rgba(15,23,42,.12);
+}
+body[data-theme="dark"]{
+  --bg:#07101d;
+  --bg2:#0b1c31;
+  --panel:rgba(7,14,28,.72);
+  --panel-border:rgba(255,255,255,.10);
+  --text:#e5eefc;
+  --muted:#b6c2d4;
+  --accent:#38bdf8;
+  --accent-2:#fb7185;
+  --card:rgba(255,255,255,.05);
+  --card-hover:rgba(56,189,248,.13);
+  --shadow:0 24px 70px rgba(0,0,0,.34);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 body{
+  min-height:100vh;
   font-family:"Microsoft YaHei",sans-serif;
-  color:#fff;
+  color:var(--text);
   background:
-    linear-gradient(180deg, rgba(5,8,18,.40), rgba(5,8,18,.82)),
-    url("images/background/478614304_a2ce47ff26_o.jpg") center/cover fixed no-repeat;
+    radial-gradient(circle at 18% 18%, rgba(56,189,248,.13), transparent 26%),
+    radial-gradient(circle at 82% 26%, rgba(251,113,133,.11), transparent 25%),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
   overflow-x:hidden;
 }
-.page-overlay{
+.bg-car{
+  position:fixed;
+  right:-3vw;
+  bottom:2vh;
+  width:min(58vw,900px);
+  height:min(38vw,560px);
+  background:url("images/background/bmw-m4-gt3-evo-4k-05.jpg.asset.1761840001541.jpg") right center/contain no-repeat;
+  opacity:.88;
+  filter:drop-shadow(0 24px 60px rgba(0,0,0,.28));
+  pointer-events:none;
+  z-index:-2;
+  animation:floatCar 10s ease-in-out infinite alternate;
+}
+.bg-track{
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(circle at 75% 20%, rgba(0,140,255,.18), transparent 30%),
-    radial-gradient(circle at 20% 80%, rgba(255,0,85,.14), transparent 28%),
-    linear-gradient(120deg, rgba(8,12,24,.18), rgba(8,12,24,.56));
-  z-index:-1;
+  background:url("images/background/478614304_a2ce47ff26_o.jpg") center/cover no-repeat;
+  opacity:.18;
   pointer-events:none;
-}
-.bg{
-  position:fixed;
-  inset:auto 0 0 auto;
-  width:min(58vw, 920px);
-  height:min(58vw, 920px);
-  background:
-    url("images/background/bmw-m4-gt3-evo-4k-05.jpg.asset.1761840001541.jpg")
-    right center / contain no-repeat;
-  filter:drop-shadow(0 24px 60px rgba(0,0,0,.42));
-  opacity:.92;
-  z-index:-1;
-  animation:floatCar 10s ease-in-out infinite alternate;
+  z-index:-3;
 }
 @keyframes floatCar{
   from{transform:translateY(0) translateX(0) scale(1);}
-  to{transform:translateY(-8px) translateX(-8px) scale(1.01);}
+  to{transform:translateY(-10px) translateX(-8px) scale(1.01);}
 }
-.lang-switcher{
+.topbar{
   position:fixed;
-  top:18px;
-  right:18px;
-  z-index:40;
+  top:16px;
+  right:16px;
+  z-index:80;
   display:flex;
   align-items:center;
   gap:10px;
   padding:10px 12px;
   border-radius:999px;
-  background:rgba(8,12,24,.68);
-  border:1px solid rgba(255,255,255,.14);
-  backdrop-filter:blur(10px);
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  backdrop-filter:blur(12px);
+  box-shadow:var(--shadow);
 }
-.lang-switcher label{
-  color:#cbd5e1;
-  font-size:.92rem;
-  white-space:nowrap;
+.topbar label{
+  font-size:.9rem;
+  color:var(--muted);
 }
-.lang-switcher select{
+.topbar select,
+.topbar button{
   border:none;
   outline:none;
   background:transparent;
-  color:#fff;
+  color:var(--text);
   font-size:.92rem;
   cursor:pointer;
-  appearance:none;
 }
-.lang-switcher option{ color:#000; }
+.topbar button{
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(56,189,248,.16);
+}
+.topbar option{color:#000;}
+.wrap{
+  width:min(1100px,92vw);
+  margin:0 auto;
+  padding:100px 0 60px;
+}
 header{
   text-align:center;
-  padding:100px 20px 60px;
-  position:relative;
+  padding:28px 20px 18px;
 }
 header h1{
-  font-size:3.5rem;
-  letter-spacing:2px;
-  color:#38bdf8;
-  text-shadow:0 0 20px #38bdf8;
+  font-size:clamp(2.6rem,5vw,4.6rem);
+  line-height:1.05;
+  color:var(--accent);
+  text-shadow:0 0 22px rgba(56,189,248,.22);
 }
-header p{
-  margin-top:15px;
-  color:#cbd5e1;
-  font-size:1.1rem;
+.subtitle{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:1.06rem;
+  line-height:1.8;
+}
+.hero-links{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:20px;
+}
+.pill{
+  text-decoration:none;
+  color:#fff;
+  padding:11px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow:0 12px 28px rgba(15,23,42,.12);
+  transition:.2s ease;
+}
+.pill:hover{transform:translateY(-2px);}
+.pill.alt{
+  background:rgba(255,255,255,.12);
+  color:var(--text);
+  border:1px solid var(--panel-border);
 }
 nav{
   display:flex;
   justify-content:center;
-  gap:25px;
-  margin-bottom:50px;
   flex-wrap:wrap;
-  padding:0 20px;
+  gap:12px;
+  margin:30px 0 40px;
 }
 nav a{
-  color:#fff;
+  color:var(--text);
   text-decoration:none;
-  padding:8px 14px;
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:20px;
-  transition:.3s;
-}
-nav a:hover{
-  background:#38bdf8;
-  color:#000;
-}
-.bili-link{
-  display:inline-block;
-  margin-top:16px;
-  padding:12px 18px;
+  padding:10px 16px;
   border-radius:999px;
-  text-decoration:none;
-  color:#fff;
-  background:linear-gradient(135deg, #ff6699, #fb7185);
-  box-shadow:0 10px 30px rgba(251,113,133,.28);
-  transition:transform .25s ease, box-shadow .25s ease;
+  background:var(--card);
+  border:1px solid var(--panel-border);
+  transition:.2s ease;
 }
-.bili-link:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 34px rgba(251,113,133,.38);
-}
-.container{
-  width:90%;
-  max-width:1000px;
-  margin:auto;
-}
+nav a:hover{background:var(--card-hover);}
 .card{
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(10px);
-  border-radius:20px;
-  padding:25px;
-  margin-bottom:25px;
-  transition:.3s;
-  border:1px solid rgba(255,255,255,.1);
+  background:var(--card);
+  border:1px solid var(--panel-border);
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:22px;
+  box-shadow:var(--shadow);
+  transition:.25s ease;
 }
 .card:hover{
-  transform:translateY(-5px);
-  border-color:#38bdf8;
+  transform:translateY(-4px);
+  background:var(--card-hover);
 }
 .card-link{
   display:block;
   color:inherit;
   text-decoration:none;
-  cursor:pointer;
 }
-.card-link:hover{ cursor:pointer; }
 h2{
-  color:#38bdf8;
-  margin-bottom:10px;
+  color:var(--accent);
+  margin-bottom:12px;
 }
+.muted{color:var(--muted);line-height:1.8;}
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
+  gap:16px;
 }
 .item{
-  background:rgba(255,255,255,.06);
-  padding:15px;
-  border-radius:15px;
-  transition:.3s;
-}
-.item:hover{
-  background:rgba(56,189,248,.2);
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--panel-border);
+  border-radius:16px;
+  padding:14px;
+  line-height:1.6;
 }
 .life-tabs{
   display:flex;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
   margin:16px 0;
 }
 .life-tab{
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  padding:10px 16px;
+  border:none;
   border-radius:999px;
+  padding:10px 16px;
   cursor:pointer;
-  transition:.25s;
+  background:rgba(255,255,255,.10);
+  color:var(--text);
+  border:1px solid var(--panel-border);
+  transition:.2s ease;
 }
 .life-tab:hover,
 .life-tab.active{
-  background:#38bdf8;
-  color:#000;
+  background:var(--accent);
+  color:#fff;
 }
 .life-panel{display:none;}
 .life-panel.active{display:block;}
@@ -191,28 +225,18 @@ h2{
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:14px;
 }
-@media (max-width: 900px){
-  .photo-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-}
-@media (max-width: 560px){
-  .photo-grid{
-    grid-template-columns:repeat(1,minmax(0,1fr));
-  }
-}
+@media (max-width:960px){.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:560px){.photo-grid{grid-template-columns:1fr;}}
 .photo-card{
-  overflow:hidden;
+  background:rgba(255,255,255,.10);
+  border:1px solid var(--panel-border);
   border-radius:16px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+  overflow:hidden;
+  transition:.2s ease;
 }
 .photo-card:hover{
-  transform:translateY(-4px);
-  background:rgba(56,189,248,.14);
-  border-color:rgba(56,189,248,.55);
-  box-shadow:0 14px 32px rgba(0,0,0,.2);
+  background:var(--card-hover);
+  transform:translateY(-3px);
 }
 .photo-card img{
   width:100%;
@@ -220,11 +244,6 @@ h2{
   object-fit:cover;
   display:block;
   cursor:pointer;
-  transition:transform .25s ease, filter .25s ease;
-}
-.photo-card:hover img{
-  transform:scale(1.02);
-  filter:brightness(1.06) saturate(1.08);
 }
 .life-more{
   display:none;
@@ -235,537 +254,548 @@ h2{
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:14px;
 }
-@media (max-width: 900px){
-  .life-more.open{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-}
-@media (max-width: 560px){
-  .life-more.open{
-    grid-template-columns:repeat(1,minmax(0,1fr));
-  }
-}
+@media (max-width:960px){.life-more.open{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:560px){.life-more.open{grid-template-columns:1fr;}}
 .life-toggle{
   margin-top:14px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.06);
-  color:#fff;
+  border:none;
   padding:10px 16px;
   border-radius:999px;
   cursor:pointer;
-  transition:.25s;
-}
-.life-toggle:hover{
-  background:#38bdf8;
-  color:#000;
+  background:rgba(56,189,248,.16);
+  color:var(--text);
 }
 .lightbox{
   position:fixed;
   inset:0;
-  background:rgba(3,8,20,.86);
   display:none;
   align-items:center;
   justify-content:center;
   padding:24px;
-  z-index:50;
+  background:rgba(2,6,23,.86);
+  z-index:100;
 }
 .lightbox.open{display:flex;}
 .lightbox-stage{
   position:relative;
+  width:100%;
+  height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
-  width:100%;
-  height:100%;
+}
+.lightbox-img{
+  max-width:min(90vw,1200px);
+  max-height:84vh;
+  object-fit:contain;
+  border-radius:18px;
+  box-shadow:0 24px 80px rgba(0,0,0,.48);
   cursor:default;
+}
+.lightbox-close{
+  position:absolute;
+  top:0;
+  right:0;
+  transform:translate(12px,-12px);
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  cursor:pointer;
 }
 .lightbox-nav{
   position:absolute;
   inset:0;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   pointer-events:none;
-  padding:0 18px;
 }
 .lightbox-btn{
   pointer-events:auto;
-  width:52px;
-  height:52px;
+  width:58px;
+  height:58px;
   border:none;
   border-radius:50%;
-  background:rgba(15,23,42,.7);
+  background:rgba(255,255,255,.14);
   color:#fff;
   font-size:1.6rem;
-  line-height:1;
   cursor:pointer;
-  display:grid;
-  place-items:center;
-  transition:transform .2s ease, background .2s ease, color .2s ease;
+  margin:0 8px;
 }
-.lightbox-btn:hover{
-  transform:scale(1.06);
-  background:rgba(56,189,248,.85);
-  color:#00111f;
-}
-.lightbox img{
-  max-width:min(96vw, 1200px);
-  max-height:88vh;
-  object-fit:contain;
-  border-radius:18px;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
-  cursor:default;
-}
-.lightbox-caption{
-  position:absolute;
-  left:50%;
-  bottom:20px;
-  transform:translateX(-50%);
-  color:#e2e8f0;
-  font-size:.95rem;
-  background:rgba(15,23,42,.7);
-  padding:8px 12px;
-  border-radius:999px;
-  max-width:min(90vw, 900px);
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  overflow:hidden;
-}
+.lightbox-btn:hover{background:rgba(255,255,255,.24);}
 footer{
   text-align:center;
-  padding:30px;
-  color:#94a3b8;
-  margin-top:40px;
+  color:var(--muted);
+  padding:18px 12px 40px;
 }
 </style>
 </head>
 <body>
-<div class="bg"></div>
-<div class="page-overlay"></div>
+<div class="bg-track"></div>
+<div class="bg-car"></div>
 
-<div class="lang-switcher">
-  <label for="language-select">Language</label>
-  <select id="language-select" aria-label="Language">
+<div class="topbar">
+  <label for="lang" data-i18n="langLabel">语言</label>
+  <select id="lang" aria-label="Language">
     <option value="zh-CN">简体中文</option>
     <option value="zh-TW">繁體中文</option>
     <option value="en">English</option>
     <option value="fr">Français</option>
     <option value="ru">Русский</option>
   </select>
+  <button id="themeBtn" type="button">深色</button>
 </div>
 
-<header>
-  <h1>Nightdreamsyo</h1>
-  <p id="site-tagline">长安大学 · 智能车辆工程 · B站UP主</p>
-  <a class="bili-link" id="enter-bili" href="https://space.bilibili.com/422662810?spm_id_from=333.788.0.0" target="_blank" rel="noopener noreferrer">进入我的 B 站主页</a>
-</header>
+<div class="wrap">
+  <header>
+    <h1 id="heroTitle">Nightdreamsyo</h1>
+    <p class="subtitle" id="heroSubtitle">长安大学智能车辆工程学生，热爱赛车、汽车技术、语言学习和视频创作。</p>
+    <div class="hero-links">
+      <a class="pill" id="bilibiliLink" href="https://space.bilibili.com/422662810?spm_id_from=333.788.0.0" target="_blank" rel="noopener">B站主页</a>
+      <a class="pill alt" id="blogLink" href="blog.html">博客</a>
+      <a class="pill alt" id="guestbookLink" href="guestbook.html">留言</a>
+    </div>
+  </header>
 
-<nav>
-  <a href="#about" id="nav-about">关于我</a>
-  <a href="#project" id="nav-project">项目</a>
-  <a href="#study" id="nav-study">学习</a>
-  <a href="#life" id="nav-life">人生经历</a>
-  <a href="#contact" id="nav-contact">联系</a>
-  <a href="https://space.bilibili.com/422662810?spm_id_from=333.788.0.0" target="_blank" rel="noopener noreferrer" id="nav-bili">B站主页</a>
-</nav>
+  <nav>
+    <a href="#about" data-i18n="navAbout">关于我</a>
+    <a href="#project" data-i18n="navProject">项目</a>
+    <a href="#study" data-i18n="navStudy">学习方向</a>
+    <a href="#life" data-i18n="navLife">人生经历</a>
+    <a href="#contact" data-i18n="navContact">联系我</a>
+    <a href="blog.html" data-i18n="navBlog">博客</a>
+    <a href="guestbook.html" data-i18n="navGuestbook">留言</a>
+  </nav>
 
-<div class="container">
   <section id="about" class="card">
-    <a class="card-link" id="about-link" href="about.html">
-      <h2 id="about-title">关于我</h2>
-      <p id="about-desc">长安大学智能车辆工程学生，热爱赛车、汽车技术、语言学习和视频创作。</p>
+    <h2 data-i18n="aboutTitle">关于我</h2>
+    <a class="card-link" href="about.html">
+      <p class="muted" id="aboutText">长安大学智能车辆工程学生，热爱赛车、汽车技术、语言学习和视频创作。点击这里进入“关于我”单页。</p>
     </a>
   </section>
 
   <section id="project" class="card">
-    <h2 id="project-title">项目经历</h2>
-    <div class="grid">
-      <div class="item" id="project-item-1">🚗 社会实践：红岩精神调研</div>
-      <div class="item" id="project-item-2">🤖 Python机器学习项目</div>
-      <div class="item" id="project-item-3">💻 C++课程设计</div>
-      <div class="item" id="project-item-4">🎥 B站视频创作</div>
-    </div>
+    <h2 data-i18n="projectTitle">项目经历</h2>
+    <div class="grid" id="projectGrid"></div>
   </section>
 
   <section id="study" class="card">
-    <h2 id="study-title">学习方向</h2>
-    <div class="grid">
-      <div class="item" id="study-item-1">C++编程</div>
-      <div class="item" id="study-item-2">Python数据分析</div>
-      <div class="item" id="study-item-3">智能车辆技术</div>
-      <div class="item" id="study-item-4">法语学习</div>
-    </div>
+    <h2 data-i18n="studyTitle">学习方向</h2>
+    <div class="grid" id="studyGrid"></div>
   </section>
 
   <section id="life" class="card">
-    <h2 id="life-title">人生经历</h2>
-    <div class="life-tabs" role="tablist" aria-label="人生经历分类">
-      <button class="life-tab active" type="button" data-life-tab="junior" id="life-tab-junior">初中</button>
-      <button class="life-tab" type="button" data-life-tab="high" id="life-tab-high">高中</button>
-      <button class="life-tab" type="button" data-life-tab="hainan" id="life-tab-hainan">2021暑假海南</button>
+    <h2 data-i18n="lifeTitle">人生经历</h2>
+    <p class="muted" data-i18n="lifeIntro">默认每组只显示 4 张图，展开后仍然保持 4 张一排。</p>
+    <div class="life-tabs">
+      <button class="life-tab active" data-life-tab="junior" data-i18n="lifeJunior">初中</button>
+      <button class="life-tab" data-life-tab="senior" data-i18n="lifeSenior">高中</button>
+      <button class="life-tab" data-life-tab="hainan" data-i18n="lifeHainan">2021 暑假海南</button>
     </div>
-
-    <div class="life-panel active" id="life-junior">
-      <div class="photo-grid" id="grid-junior-featured"></div>
-      <button class="life-toggle" type="button" data-life-toggle="junior" id="life-toggle-junior">展开更多</button>
-      <div class="life-more" id="grid-junior-more"></div>
-    </div>
-
-    <div class="life-panel" id="life-high">
-      <div class="photo-grid" id="grid-high-featured"></div>
-      <button class="life-toggle" type="button" data-life-toggle="high" id="life-toggle-high">展开更多</button>
-      <div class="life-more" id="grid-high-more"></div>
-    </div>
-
-    <div class="life-panel" id="life-hainan">
-      <div class="photo-grid" id="grid-hainan-featured"></div>
-      <button class="life-toggle" type="button" data-life-toggle="hainan" id="life-toggle-hainan">展开更多</button>
-      <div class="life-more" id="grid-hainan-more"></div>
-    </div>
+    <div id="lifePanels"></div>
   </section>
 
   <section id="contact" class="card">
-    <h2 id="contact-title">联系我</h2>
-    <p id="contact-bili">B站：Nightdreamsyo</p>
-    <p id="contact-email">Email：3439406980@qq.com</p>
-    <a class="bili-link" id="contact-bili-link" href="https://space.bilibili.com/422662810?spm_id_from=333.788.0.0" target="_blank" rel="noopener noreferrer">去我的 B 站主页</a>
+    <h2 data-i18n="contactTitle">联系我</h2>
+    <div class="grid">
+      <div class="item">B站：Nightdreamsyo</div>
+      <div class="item">Email：3439406980@qq.com</div>
+      <div class="item">GitHub：Nightdreams27.github.io</div>
+      <div class="item" data-i18n="contactHint">你也可以从导航直接进入博客和留言板。</div>
+    </div>
   </section>
 </div>
 
 <div class="lightbox" id="lightbox" aria-hidden="true">
-  <div class="lightbox-stage" id="lightbox-stage">
-    <div class="lightbox-nav" aria-hidden="true">
-      <button class="lightbox-btn" type="button" id="lightbox-prev" aria-label="上一张">&lt;</button>
-      <button class="lightbox-btn" type="button" id="lightbox-next" aria-label="下一张">&gt;</button>
+  <div class="lightbox-stage">
+    <button class="lightbox-close" id="lightboxClose" type="button">×</button>
+    <div class="lightbox-nav">
+      <button class="lightbox-btn" id="prevBtn" type="button" aria-label="Previous">‹</button>
+      <button class="lightbox-btn" id="nextBtn" type="button" aria-label="Next">›</button>
     </div>
-    <img id="lightbox-img" alt="放大预览" />
-    <div class="lightbox-caption" id="lightbox-caption"></div>
+    <img id="lightboxImg" class="lightbox-img" alt="" />
   </div>
 </div>
 
 <footer>© 2026 Nightdreamsyo | Powered by GitHub Pages</footer>
 
 <script>
-  const translations = {
-    'zh-CN': {
-      title: 'Nightdreamsyo | 个人主页',
-      tagline: '长安大学 · 智能车辆工程 · B站UP主',
-      nav: ['关于我', '项目', '学习', '人生经历', '联系', 'B站主页'],
-      aboutTitle: '关于我',
-      aboutDesc: '长安大学智能车辆工程学生，热爱赛车、汽车技术、语言学习和视频创作。',
-      projectTitle: '项目经历',
-      projectItems: ['🚗 社会实践：红岩精神调研', '🤖 Python机器学习项目', '💻 C++课程设计', '🎥 B站视频创作'],
-      studyTitle: '学习方向',
-      studyItems: ['C++编程', 'Python数据分析', '智能车辆技术', '法语学习'],
-      lifeTitle: '人生经历',
-      lifeTabs: ['初中', '高中', '2021暑假海南'],
-      expandMore: '展开更多',
-      collapse: '收起',
-      contactTitle: '联系我',
-      contactBili: 'B站：Nightdreamsyo',
-      contactEmail: 'Email：3439406980@qq.com',
-      enterBili: '进入我的 B 站主页',
-      goBili: '去我的 B 站主页',
-      aboutLink: 'about.html'
-    },
-    'zh-TW': {
-      title: 'Nightdreamsyo | 個人主頁',
-      tagline: '長安大學 · 智能車輛工程 · B站UP主',
-      nav: ['關於我', '項目', '學習', '人生經歷', '聯絡', 'B站主頁'],
-      aboutTitle: '關於我',
-      aboutDesc: '長安大學智能車輛工程學生，熱愛賽車、汽車技術、語言學習和視頻創作。',
-      projectTitle: '項目經歷',
-      projectItems: ['🚗 社會實踐：紅岩精神調研', '🤖 Python機器學習項目', '💻 C++課程設計', '🎥 B站視頻創作'],
-      studyTitle: '學習方向',
-      studyItems: ['C++編程', 'Python數據分析', '智能車輛技術', '法語學習'],
-      lifeTitle: '人生經歷',
-      lifeTabs: ['初中', '高中', '2021暑假海南'],
-      expandMore: '展開更多',
-      collapse: '收起',
-      contactTitle: '聯絡我',
-      contactBili: 'B站：Nightdreamsyo',
-      contactEmail: 'Email：3439406980@qq.com',
-      enterBili: '進入我的 B 站主頁',
-      goBili: '去我的 B 站主頁',
-      aboutLink: 'about.html'
-    },
-    en: {
-      title: 'Nightdreamsyo | Personal Site',
-      tagline: 'Chang\'an University · Intelligent Vehicle Engineering · Bilibili Creator',
-      nav: ['About', 'Projects', 'Study', 'Life', 'Contact', 'Bilibili'],
-      aboutTitle: 'About Me',
-      aboutDesc: 'A student of Intelligent Vehicle Engineering at Chang\'an University, passionate about racing, automotive technology, language learning, and video creation.',
-      projectTitle: 'Projects',
-      projectItems: ['🚗 Social practice: Hongyan Spirit research', '🤖 Python machine learning project', '💻 C++ course design', '🎥 Bilibili video creation'],
-      studyTitle: 'Learning Focus',
-      studyItems: ['C++ programming', 'Python data analysis', 'Intelligent vehicle technology', 'French learning'],
-      lifeTitle: 'Life Stories',
-      lifeTabs: ['Junior High', 'Senior High', 'Hainan, Summer 2021'],
-      expandMore: 'Expand more',
-      collapse: 'Collapse',
-      contactTitle: 'Contact',
-      contactBili: 'Bilibili: Nightdreamsyo',
-      contactEmail: 'Email: 3439406980@qq.com',
-      enterBili: 'Visit my Bilibili',
-      goBili: 'Go to my Bilibili',
-      aboutLink: 'about.html'
-    },
-    fr: {
-      title: 'Nightdreamsyo | Site personnel',
-      tagline: 'Université de Chang\'an · Génie des véhicules intelligents · Créateur Bilibili',
-      nav: ['À propos', 'Projets', 'Études', 'Vie', 'Contact', 'Bilibili'],
-      aboutTitle: 'À propos de moi',
-      aboutDesc: 'Étudiant en génie des véhicules intelligents à l’Université de Chang\'an, passionné par la course, la technologie automobile, l’apprentissage des langues et la création vidéo.',
-      projectTitle: 'Projets',
-      projectItems: ['🚗 Pratique sociale : étude de l’esprit de Hongyan', '🤖 Projet d’apprentissage automatique Python', '💻 Conception de cours C++', '🎥 Création vidéo sur Bilibili'],
-      studyTitle: 'Axes d’apprentissage',
-      studyItems: ['Programmation C++', 'Analyse de données Python', 'Technologie des véhicules intelligents', 'Apprentissage du français'],
-      lifeTitle: 'Parcours de vie',
-      lifeTabs: ['Collège', 'Lycée', 'Hainan, été 2021'],
-      expandMore: 'Développer',
-      collapse: 'Réduire',
-      contactTitle: 'Contact',
-      contactBili: 'Bilibili : Nightdreamsyo',
-      contactEmail: 'Email : 3439406980@qq.com',
-      enterBili: 'Voir mon Bilibili',
-      goBili: 'Aller sur mon Bilibili',
-      aboutLink: 'about.html'
-    },
-    ru: {
-      title: 'Nightdreamsyo | Личная страница',
-      tagline: 'Университет Чанъань · Интеллектуальная автомобильная инженерия · Автор Bilibili',
-      nav: ['Обо мне', 'Проекты', 'Учёба', 'Жизнь', 'Контакты', 'Bilibili'],
-      aboutTitle: 'Обо мне',
-      aboutDesc: 'Студент направления "Интеллектуальная автомобильная инженерия" в Университете Чанъань, увлекаюсь гонками, автомобильными технологиями, изучением языков и видеотворчеством.',
-      projectTitle: 'Проекты',
-      projectItems: ['🚗 Социальная практика: исследование духа Хунъянь', '🤖 Проект машинного обучения на Python', '💻 Курсовой проект на C++', '🎥 Создание видео на Bilibili'],
-      studyTitle: 'Направления обучения',
-      studyItems: ['Программирование на C++', 'Анализ данных на Python', 'Технологии интеллектуальных автомобилей', 'Изучение французского'],
-      lifeTitle: 'Жизненный путь',
-      lifeTabs: ['Средняя школа', 'Старшая школа', 'Хайнань, лето 2021'],
-      expandMore: 'Показать ещё',
-      collapse: 'Свернуть',
-      contactTitle: 'Контакты',
-      contactBili: 'Bilibili: Nightdreamsyo',
-      contactEmail: 'Email: 3439406980@qq.com',
-      enterBili: 'Перейти в мой Bilibili',
-      goBili: 'Перейти в мой Bilibili',
-      aboutLink: 'about.html'
+const I18N = {
+  'zh-CN': {
+    langLabel: '语言',
+    themeLight: '浅色',
+    themeDark: '深色',
+    heroTitle: 'Nightdreamsyo',
+    heroSubtitle: '长安大学智能车辆工程学生，热爱赛车、汽车技术、语言学习和视频创作。',
+    navAbout: '关于我',
+    navProject: '项目',
+    navStudy: '学习方向',
+    navLife: '人生经历',
+    navContact: '联系我',
+    navBlog: '博客',
+    navGuestbook: '留言',
+    aboutTitle: '关于我',
+    aboutText: '长安大学智能车辆工程学生，热爱赛车、汽车技术、语言学习和视频创作。点击这里进入“关于我”单页。',
+    projectTitle: '项目经历',
+    projectItems: ['社会实践：红岩精神调研', 'Python 机器学习项目', 'C++ 课程设计', 'B站视频创作'],
+    studyTitle: '学习方向',
+    studyItems: ['C++ 编程', 'Python 数据分析', '智能车辆技术', '法语学习'],
+    lifeTitle: '人生经历',
+    lifeIntro: '默认每组只显示 4 张图，展开后仍然保持 4 张一排。',
+    lifeJunior: '初中',
+    lifeSenior: '高中',
+    lifeHainan: '2021 暑假海南',
+    more: '展开更多',
+    less: '收起',
+    contactTitle: '联系我',
+    contactHint: '你也可以从导航直接进入博客和留言板。',
+    footer: '© 2026 Nightdreamsyo | Powered by GitHub Pages'
+  },
+  'zh-TW': {
+    langLabel: '語言',
+    themeLight: '淺色',
+    themeDark: '深色',
+    heroTitle: 'Nightdreamsyo',
+    heroSubtitle: '長安大學智能車輛工程學生，熱愛賽車、汽車技術、語言學習和影片創作。',
+    navAbout: '關於我',
+    navProject: '項目',
+    navStudy: '學習方向',
+    navLife: '人生經歷',
+    navContact: '聯絡我',
+    navBlog: '博客',
+    navGuestbook: '留言',
+    aboutTitle: '關於我',
+    aboutText: '長安大學智能車輛工程學生，熱愛賽車、汽車技術、語言學習和影片創作。點擊這裡進入「關於我」單頁。',
+    projectTitle: '項目經歷',
+    projectItems: ['社會實踐：紅岩精神調研', 'Python 機器學習項目', 'C++ 課程設計', 'B站影片創作'],
+    studyTitle: '學習方向',
+    studyItems: ['C++ 程式設計', 'Python 資料分析', '智能車輛技術', '法語學習'],
+    lifeTitle: '人生經歷',
+    lifeIntro: '預設每組只顯示 4 張圖，展開後仍然保持 4 張一排。',
+    lifeJunior: '初中',
+    lifeSenior: '高中',
+    lifeHainan: '2021 暑假海南',
+    more: '展開更多',
+    less: '收起',
+    contactTitle: '聯絡我',
+    contactHint: '你也可以從導覽直接進入博客和留言板。',
+    footer: '© 2026 Nightdreamsyo | Powered by GitHub Pages'
+  },
+  en: {
+    langLabel: 'Language',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    heroTitle: 'Nightdreamsyo',
+    heroSubtitle: 'A Chang’an University intelligent vehicle engineering student who loves racing, automotive tech, language learning, and video creation.',
+    navAbout: 'About',
+    navProject: 'Projects',
+    navStudy: 'Study',
+    navLife: 'Life',
+    navContact: 'Contact',
+    navBlog: 'Blog',
+    navGuestbook: 'Guestbook',
+    aboutTitle: 'About Me',
+    aboutText: 'A Chang’an University intelligent vehicle engineering student who loves racing, automotive tech, language learning, and video creation. Click here to open the standalone About page.',
+    projectTitle: 'Projects',
+    projectItems: ['Social Practice: Hongyan Spirit Research', 'Python Machine Learning Project', 'C++ Course Design', 'Bilibili Video Creation'],
+    studyTitle: 'Study Focus',
+    studyItems: ['C++ Programming', 'Python Data Analysis', 'Intelligent Vehicle Tech', 'French Learning'],
+    lifeTitle: 'Life Story',
+    lifeIntro: 'By default each group shows 4 photos. Expanded mode still keeps 4 photos per row.',
+    lifeJunior: 'Junior School',
+    lifeSenior: 'High School',
+    lifeHainan: 'Hainan, Summer 2021',
+    more: 'Show more',
+    less: 'Show less',
+    contactTitle: 'Contact',
+    contactHint: 'You can also enter the blog and guestbook from the navigation.',
+    footer: '© 2026 Nightdreamsyo | Powered by GitHub Pages'
+  },
+  fr: {
+    langLabel: 'Langue',
+    themeLight: 'Clair',
+    themeDark: 'Sombre',
+    heroTitle: 'Nightdreamsyo',
+    heroSubtitle: 'Étudiant en génie des véhicules intelligents à l’Université Chang’an, passionné par la course, la technologie automobile, l’apprentissage des langues et la création vidéo.',
+    navAbout: 'À propos',
+    navProject: 'Projets',
+    navStudy: 'Études',
+    navLife: 'Vie',
+    navContact: 'Contact',
+    navBlog: 'Blog',
+    navGuestbook: 'Livre d’or',
+    aboutTitle: 'À propos de moi',
+    aboutText: 'Étudiant en génie des véhicules intelligents à l’Université Chang’an, passionné par la course, la technologie automobile, l’apprentissage des langues et la création vidéo. Cliquez ici pour ouvrir la page “À propos”.',
+    projectTitle: 'Projets',
+    projectItems: ['Projet de recherche sur l’esprit Hongyan', 'Projet d’apprentissage automatique en Python', 'Conception de cours en C++', 'Création vidéo sur Bilibili'],
+    studyTitle: 'Axes d’étude',
+    studyItems: ['Programmation C++', 'Analyse de données avec Python', 'Technologies de véhicules intelligents', 'Apprentissage du français'],
+    lifeTitle: 'Parcours de vie',
+    lifeIntro: 'Par défaut, chaque groupe affiche 4 photos. En mode développé, il y a toujours 4 photos par ligne.',
+    lifeJunior: 'Collège',
+    lifeSenior: 'Lycée',
+    lifeHainan: 'Hainan, été 2021',
+    more: 'Afficher plus',
+    less: 'Réduire',
+    contactTitle: 'Contact',
+    contactHint: 'Vous pouvez aussi ouvrir le blog et le livre d’or depuis la navigation.',
+    footer: '© 2026 Nightdreamsyo | Powered by GitHub Pages'
+  },
+  ru: {
+    langLabel: 'Язык',
+    themeLight: 'Светлая',
+    themeDark: 'Тёмная',
+    heroTitle: 'Nightdreamsyo',
+    heroSubtitle: 'Студент Чанъаньского университета по направлению интеллектуальных транспортных средств, люблю гонки, автотехнику, изучение языков и видеотворчество.',
+    navAbout: 'Обо мне',
+    navProject: 'Проекты',
+    navStudy: 'Учёба',
+    navLife: 'Жизнь',
+    navContact: 'Контакты',
+    navBlog: 'Блог',
+    navGuestbook: 'Гостевая',
+    aboutTitle: 'Обо мне',
+    aboutText: 'Студент Чанъаньского университета по направлению интеллектуальных транспортных средств, люблю гонки, автотехнику, изучение языков и видеотворчество. Нажмите здесь, чтобы открыть отдельную страницу “Обо мне”.',
+    projectTitle: 'Проекты',
+    projectItems: ['Исследование духа Хунъянь', 'Проект машинного обучения на Python', 'Курсовой проект на C++', 'Создание видео на Bilibili'],
+    studyTitle: 'Направления обучения',
+    studyItems: ['Программирование на C++', 'Анализ данных на Python', 'Технологии интеллектуальных автомобилей', 'Изучение французского'],
+    lifeTitle: 'История жизни',
+    lifeIntro: 'По умолчанию в каждой группе показываются 4 фото. После раскрытия по-прежнему 4 фото в ряд.',
+    lifeJunior: 'Средняя школа',
+    lifeSenior: 'Старшая школа',
+    lifeHainan: 'Хайнань, лето 2021',
+    more: 'Показать ещё',
+    less: 'Скрыть',
+    contactTitle: 'Контакты',
+    contactHint: 'Вы также можете открыть блог и гостевую через навигацию.',
+    footer: '© 2026 Nightdreamsyo | Powered by GitHub Pages'
+  }
+};
+
+const LIFE_IMAGES = {
+  junior: [
+    'images/life/junior/0BED339FA5E6C8D5AF0885A5E8AF9A72.jpg',
+    'images/life/junior/2F8CF97C209CD28335C4BB5F11095C55.jpg',
+    'images/life/junior/324DE00874093F64CCBD78ED70D58CB3.jpg',
+    'images/life/junior/43AE0D3E8214464419654BC63C6ACD95.jpg',
+    'images/life/junior/49941D42FAFBA80811612EC4213AB9C8.jpg',
+    'images/life/junior/602FEC9DF643DB3EBDD0254190B9FF95.jpg',
+    'images/life/junior/6E77EBD8F568B1143EB2FD81457F3705.jpg',
+    'images/life/junior/71739F271EA3BC7FD68335DC50433849.jpg'
+  ],
+  senior: [
+    'images/life/senior/09D21E6D42997A034D7502CEA1A4328C.jpg',
+    'images/life/senior/16F70FFD61F42E5D6125A966EAE662D1.jpg',
+    'images/life/senior/28969FD3873336A909C50A3E48A07145.jpg',
+    'images/life/senior/3037C7A36AEC9304FBCC6D6797274D5B.jpg',
+    'images/life/senior/6998576A6479ED4AC5E1C21DDC1CA231.jpg',
+    'images/life/senior/A25A9B7FB23BB7401F800B21F089349C.jpg',
+    'images/life/senior/B0A2CF3CDAEE0F95E4B7DABE75AE3B40.jpg',
+    'images/life/senior/ED62CF2E3B27E7BF9031749126718B11.jpg'
+  ],
+  hainan: [
+    'images/life/2021hainan/03293E346C20C4A11DD6F25085159D91.jpg',
+    'images/life/2021hainan/03531D48E7976FA68EFDA924B29D096F.jpg',
+    'images/life/2021hainan/09FFD07D3F686AB748A8299505176ACB.jpg',
+    'images/life/2021hainan/0B1A64F8E937DA46D6B56E536E05253B.jpg',
+    'images/life/2021hainan/0D60FD5398FB8FD5BC13E382D019F708.jpg',
+    'images/life/2021hainan/11BAA8E02B0A6D515877F175B38108F6.jpg',
+    'images/life/2021hainan/13153741EDA0AE2031E27E80CDD0421A.jpg',
+    'images/life/2021hainan/134FB0FCC9E29796CB0C11A523E0CC9C.jpg'
+  ]
+};
+
+const PROJECT_ITEMS = ['社会实践：红岩精神调研', 'Python 机器学习项目', 'C++ 课程设计', 'B站视频创作'];
+const STUDY_ITEMS = ['C++ 编程', 'Python 数据分析', '智能车辆技术', '法语学习'];
+
+const lifeState = { active: 'junior', open: { junior: false, senior: false, hainan: false } };
+let lightboxItems = [];
+let lightboxIndex = 0;
+
+function getLang(){
+  const q = new URLSearchParams(location.search).get('lang');
+  if(q && I18N[q]) return q;
+  const stored = localStorage.getItem('site-lang');
+  return I18N[stored] ? stored : 'zh-CN';
+}
+
+function translate(lang){
+  return I18N[lang] || I18N['zh-CN'];
+}
+
+function setLang(lang){
+  const t = translate(lang);
+  localStorage.setItem('site-lang', lang);
+  document.documentElement.lang = lang;
+  document.title = `${t.heroTitle} | ${t.navAbout}`;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) el.textContent = t[key];
+  });
+  document.getElementById('heroTitle').textContent = t.heroTitle;
+  document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
+  document.getElementById('aboutText').textContent = t.aboutText;
+  document.getElementById('themeBtn').textContent = document.body.dataset.theme === 'dark' ? t.themeLight : t.themeDark;
+  document.getElementById('lang').value = lang;
+  document.getElementById('footerText').textContent = t.footer;
+  renderLists();
+  renderLife();
+  const url = new URL(location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState(null, '', url);
+}
+
+function applyTheme(theme){
+  document.body.dataset.theme = theme;
+  localStorage.setItem('site-theme', theme);
+  const t = translate(getLang());
+  document.getElementById('themeBtn').textContent = theme === 'dark' ? t.themeLight : t.themeDark;
+}
+
+function renderLists(){
+  const lang = getLang();
+  const t = translate(lang);
+  const projectGrid = document.getElementById('projectGrid');
+  projectGrid.innerHTML = t.projectItems.map(item => `<div class="item">${item}</div>`).join('');
+  const studyGrid = document.getElementById('studyGrid');
+  studyGrid.innerHTML = t.studyItems.map(item => `<div class="item">${item}</div>`).join('');
+}
+
+function imageLabel(src){
+  const name = src.split('/').pop().replace(/\.[^.]+$/, '');
+  return name;
+}
+
+function lifeCaption(tab, index){
+  const map = {
+    junior: ['初中', '初中', 'Junior', 'Collège', 'Средняя школа'],
+    senior: ['高中', '高中', 'High School', 'Lycée', 'Старшая школа'],
+    hainan: ['2021 暑假海南', '2021 暑假海南', 'Hainan', 'Hainan', 'Хайнань']
+  };
+  return map[tab][['zh-CN','zh-TW','en','fr','ru'].indexOf(getLang())];
+}
+
+function renderLife(){
+  const t = translate(getLang());
+  const host = document.getElementById('lifePanels');
+  host.innerHTML = '';
+  for (const [key, images] of Object.entries(LIFE_IMAGES)) {
+    const open = !!lifeState.open[key];
+    const visible = images.slice(0, 4);
+    const rest = images.slice(4);
+    const panel = document.createElement('div');
+    panel.className = `life-panel ${lifeState.active === key ? 'active' : ''}`;
+    panel.dataset.lifePanel = key;
+
+    const grid = document.createElement('div');
+    grid.className = 'photo-grid';
+    visible.forEach((src, idx) => {
+      grid.appendChild(photoCard(key, src, idx));
+    });
+    panel.appendChild(grid);
+
+    if (rest.length) {
+      const more = document.createElement('div');
+      more.className = `life-more ${open ? 'open' : ''}`;
+      rest.forEach((src, idx) => more.appendChild(photoCard(key, src, idx + 4)));
+      panel.appendChild(more);
+
+      const toggle = document.createElement('button');
+      toggle.className = 'life-toggle';
+      toggle.type = 'button';
+      toggle.textContent = open ? t.less : t.more;
+      toggle.addEventListener('click', () => {
+        lifeState.open[key] = !lifeState.open[key];
+        renderLife();
+      });
+      panel.appendChild(toggle);
     }
-  };
 
-  function getLang() {
-    const params = new URLSearchParams(location.search);
-    const fromUrl = params.get('lang');
-    if (fromUrl && translations[fromUrl]) return fromUrl;
-    const saved = localStorage.getItem('site-lang');
-    return translations[saved] ? saved : 'zh-CN';
+    host.appendChild(panel);
   }
+}
 
-  function setLang(lang, updateUrl = true) {
-    const t = translations[lang] || translations['zh-CN'];
-    localStorage.setItem('site-lang', lang);
-    document.documentElement.lang = lang;
-    document.title = t.title;
-    document.getElementById('site-tagline').textContent = t.tagline;
-    document.getElementById('enter-bili').textContent = t.enterBili;
-    document.getElementById('nav-about').textContent = t.nav[0];
-    document.getElementById('nav-project').textContent = t.nav[1];
-    document.getElementById('nav-study').textContent = t.nav[2];
-    document.getElementById('nav-life').textContent = t.nav[3];
-    document.getElementById('nav-contact').textContent = t.nav[4];
-    document.getElementById('nav-bili').textContent = t.nav[5];
-    document.getElementById('about-title').textContent = t.aboutTitle;
-    document.getElementById('about-desc').textContent = t.aboutDesc;
-    document.getElementById('about-link').href = `${t.aboutLink}?lang=${encodeURIComponent(lang)}`;
-    document.getElementById('project-title').textContent = t.projectTitle;
-    ['project-item-1','project-item-2','project-item-3','project-item-4'].forEach((id, i) => {
-      document.getElementById(id).textContent = t.projectItems[i];
-    });
-    document.getElementById('study-title').textContent = t.studyTitle;
-    ['study-item-1','study-item-2','study-item-3','study-item-4'].forEach((id, i) => {
-      document.getElementById(id).textContent = t.studyItems[i];
-    });
-    document.getElementById('life-title').textContent = t.lifeTitle;
-    document.getElementById('life-tab-junior').textContent = t.lifeTabs[0];
-    document.getElementById('life-tab-high').textContent = t.lifeTabs[1];
-    document.getElementById('life-tab-hainan').textContent = t.lifeTabs[2];
-    document.getElementById('contact-title').textContent = t.contactTitle;
-    document.getElementById('contact-bili').textContent = t.contactBili;
-    document.getElementById('contact-email').textContent = t.contactEmail;
-    document.getElementById('contact-bili-link').textContent = t.goBili;
-    document.getElementById('language-select').value = lang;
-    document.querySelectorAll('.life-toggle').forEach((btn) => {
-      btn.textContent = btn.dataset.expanded === 'true' ? t.collapse : t.expandMore;
-    });
-    if (updateUrl) {
-      const url = new URL(location.href);
-      url.searchParams.set('lang', lang);
-      history.replaceState(null, '', url);
-    }
-  }
+function photoCard(tab, src, index){
+  const wrap = document.createElement('article');
+  wrap.className = 'photo-card';
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = `${lifeCaption(tab, index)} ${index + 1}`;
+  img.loading = 'lazy';
+  img.addEventListener('click', () => openLightbox(tab, src));
+  wrap.appendChild(img);
+  return wrap;
+}
 
-  document.getElementById('language-select').addEventListener('change', (event) => {
-    setLang(event.target.value, true);
+function openLightbox(tab, src){
+  const all = LIFE_IMAGES[tab];
+  lightboxItems = all;
+  lightboxIndex = all.indexOf(src);
+  if (lightboxIndex < 0) lightboxIndex = 0;
+  const box = document.getElementById('lightbox');
+  box.classList.add('open');
+  box.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  renderLightbox();
+}
+
+function renderLightbox(){
+  const img = document.getElementById('lightboxImg');
+  const src = lightboxItems[lightboxIndex];
+  img.src = src;
+  img.alt = imageLabel(src);
+}
+
+function closeLightbox(){
+  const box = document.getElementById('lightbox');
+  box.classList.remove('open');
+  box.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function prevImage(){
+  if (!lightboxItems.length) return;
+  lightboxIndex = (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length;
+  renderLightbox();
+}
+
+function nextImage(){
+  if (!lightboxItems.length) return;
+  lightboxIndex = (lightboxIndex + 1) % lightboxItems.length;
+  renderLightbox();
+}
+
+document.getElementById('lang').addEventListener('change', e => setLang(e.target.value));
+document.getElementById('themeBtn').addEventListener('click', () => {
+  applyTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target.id === 'lightbox') closeLightbox();
+});
+document.getElementById('prevBtn').addEventListener('click', prevImage);
+document.getElementById('nextBtn').addEventListener('click', nextImage);
+document.querySelectorAll('[data-life-tab]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    lifeState.active = btn.dataset.lifeTab;
+    document.querySelectorAll('.life-tab').forEach(b => b.classList.toggle('active', b === btn));
+    renderLife();
   });
+});
+document.addEventListener('keydown', e => {
+  const box = document.getElementById('lightbox');
+  if (!box.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') prevImage();
+  if (e.key === 'ArrowRight') nextImage();
+});
 
-  const lifeFolders = {
-    junior: 'images/life/junior',
-    high: 'images/life/senior',
-    hainan: 'images/life/2021hainan'
-  };
-
-  const lifeData = {
-    junior: [
-      "0BED339FA5E6C8D5AF0885A5E8AF9A72.jpg","2F8CF97C209CD28335C4BB5F11095C55.jpg","324DE00874093F64CCBD78ED70D58CB3.jpg","43AE0D3E8214464419654BC63C6ACD95.jpg","49941D42FAFBA80811612EC4213AB9C8.jpg","602FEC9DF643DB3EBDD0254190B9FF95.jpg","6E77EBD8F568B1143EB2FD81457F3705.jpg","71739F271EA3BC7FD68335DC50433849.jpg","772935E68D3EB882ACD0010D67B4C6A4.jpg","7EE179A14108722758BB6886DFBCF8E4.jpg","AD256E4362B7B5929DAF0AA35E2904A7.jpg","B3F24F4DADD1B22C05E85F753C0F5AFD.jpg","B4F9AE9D670D8CE50C8F3BE1358C1CD1.jpg","B58E5AD774B5D839D40A0F373A02C04C.jpg","E5168EFFC913A298EF19697C26254BBB.jpg"
-    ],
-    high: [
-      "09D21E6D42997A034D7502CEA1A4328C.jpg","16F70FFD61F42E5D6125A966EAE662D1.jpg","28969FD3873336A909C50A3E48A07145.jpg","3037C7A36AEC9304FBCC6D6797274D5B.jpg","6998576A6479ED4AC5E1C21DDC1CA231.jpg","A25A9B7FB23BB7401F800B21F089349C.jpg","B0A2CF3CDAEE0F95E4B7DABE75AE3B40.jpg","ED62CF2E3B27E7BF9031749126718B11.jpg","QQ图片20240203145334.jpg","QQ图片20240203145354.jpg","QQ图片20240203145400.jpg"
-    ],
-    hainan: [
-      "03293E346C20C4A11DD6F25085159D91.jpg","03531D48E7976FA68EFDA924B29D096F.jpg","09FFD07D3F686AB748A8299505176ACB.jpg","0B1A64F8E937DA46D6B56E536E05253B.jpg","0D60FD5398FB8FD5BC13E382D019F708.jpg","11BAA8E02B0A6D515877F175B38108F6.jpg","13153741EDA0AE2031E27E80CDD0421A.jpg","134FB0FCC9E29796CB0C11A523E0CC9C.jpg","1CFEA3DEAD63A2171F3F5339CBD7D380.jpg","1D08075C0F388886916340B36BD19A34.jpg","1D7410A542FF03DD44BD4181E80D4470.jpg","1EB8A6A9B3DFD02E4BD3326A306A798B.jpg","20FA69ACFAE552F4665E45B0C7EBC306.jpg","217C91D5FA095CF2C543749AE685757B.jpg","22A65230B48B8FC2FA1F32B749A478B2.jpg","22C1230F5F39108521284A3B0A8560AC.jpg","26324EA473F315E06344B8D19CDC8A9D.jpg","2FF50DAB625C1CFDDBF31B21A26D267A.jpg","3426467931373FF6443ECC4955BEE893.jpg","343467804CD0505BA4D1B3F5AEF493D5.jpg","379129D4797E7B2E03D7C3F3EB471D0C.jpg","379132E397171D3EB103C191192880D0.jpg","3BCFA640B814636B3F10EEDF87C7C7BE.jpg","3CB3CA2092011D304B5C3BBD0A187A0A.jpg","3EDF2424612C7F269BA28447722CDE47.jpg","41D890B057B97A137DAA4D2593CABDD8.jpg","43A6B45C879F7592E4AD7BBD258C8CC3.jpg","45C028E8E0051829FA3C3F26A97B1948.jpg","46EA70C5B3B800FE3A7B93E19BE88986.jpg","47D6CCA86702FAF9D23273CAF19FD5CD.jpg","4BB28E35285F65286A9DDA3C4685DCCE.jpg","4C56BD66B32CE5AF36516AC44AB1F2EF.jpg","4DC4840386F4D831CD84E680256FA30E.jpg","4FEE8478A7F61EB51B1E847BD32ECCF8.jpg","50FF13513AEF9E48EA42CAC794E3A45C.jpg","5137685E40534A0506678C9EC722CEF0.jpg","51A4F35E6EFCE771FEB04B0B2B76D504.jpg","534A83E2E7777929DF8A94BBF0EF4450.jpg","580C586C7E6E9D54E067CE59A70C6BC7.jpg","5B6DA91708AAE1B985A67500E5FD92FB.jpg","5CED45864281473753866560F5324405.jpg","603F95034BF076CFD0E05E53F9B6B322.jpg","68A827F87B70472A17C337D815779AEA.jpg","692ED31E0C5BAD10690976A118F1D6E7.jpg","6C8C47C0DAB10B39A88CC5BA8B841A20.jpg","6F7754B7845A7FA73DEEDC737885A65F.jpg","72F88B59445A216F3ECCFF922D4E567B.jpg","731FADBA33D384959AB8B0A253238083.jpg","775BFF0474638FD83B46C98AD6CEB6E2.jpg","78BFF4DADF5F7347FF8B85B3FBCC49F7.jpg","7C755E8070F268B979889FBEA26679E1.jpg","81F240A018A2D1A4DDF581C028ED69A1.jpg","8695C7DB4BAC33F14C56798424B649C1.jpg","8855B8F8524754410A2FD5288D909AF0.jpg","8ACEFE3FAF544BE6C3EB5FD2E9F857B1.jpg","8B12F7A07DC509F1AFE673705A6FE743.jpg","8B9EB7D502C2E91B5823D7F589E4DABC.jpg","8CCEEEEF393FCF1CEB0C308F8881F437.jpg","9D0A7936D94F3DCAD2CCF586DB1961AE.jpg","A0DA2B0F6455F5EF179E2A7F67BCC2F6.jpg","A4A04F51E8161E0671AFF743211BC6FF.jpg","AE92E66D4651C3BD8728B5643E81DC5A.jpg","AF14C28F9539FA4FE742841832947575.jpg","B0E04ADB79CB6B64EADAD6DDD33B01C1.jpg","B1B34DFD06FDB9097840766F2CD64386.png","B9F03BB448E4254EE8746A15C43EFA01.jpg","BB7640EF899ADF999548ACD9E3A6FC7D.jpg","BE673A359A2B4E898B792ED8E2D474B5.jpg","C67695A2C65ABD73FFEE8B3F4B826C18.jpg","C7694EC681AF813CF760910522EAB32B.jpg","CBC063914A4676E03E0756AA51225C33.jpg","CBD0FA512EF1AC8A20D6B0BD56E1B8E2.jpg","D0551AD41A837A85C12A6B427691192A.jpg","D382520F13D6E34713A2FFF9B61502CE.jpg","DA126D1899299523450E39BF007DFCC5.jpg","DA74BD9EE755FDCFC4D10753156EF079.jpg","DABD6E71EB2D1F0B577EDDDA1E89CEF8.jpg","DC519BA54AAD51994662B969354BC8C7.jpg","DDA2B4799A15D4495A0C9311FEA5A93C.jpg","E382C38192118AF77F4F3C5999855203.jpg","E4B95F612D8CFDDA26B2214DCA6E2CA1.jpg","E579052F6B6918DE784E0CC595606299.jpg","E91F074C9C3998849B363C5689D06D7E.jpg","E98CDE3A611C0DA4DD49EE9C18D5ACD8.jpg","EA3332A51DEB86451B524951EB2FCD4A.jpg","EBC4ACB7EDA9DC6F7FFC757105C2A67B.jpg","ED53046F2298A03308E83D3EC99C7491.jpg","EF2DA4820C58A2A0004024F10B51D8BB.jpg","F1FBFCAA851B52E2CD771DBA09113B17.jpg","FC5C9D606DC3930D3E1B16C4E3DF1AEC.jpg","FDC9F52475C9DF53B0FE88636BF7721F.jpg","FE3FBCAA15F8C8A59A815DBE822B1EE0.jpg","FFDAA2675D7DA5AABD2CD703EB2D96A9.jpg"]
-  };
-
-  const tabs = document.querySelectorAll('.life-tab');
-  const panels = {
-    junior: document.getElementById('life-junior'),
-    high: document.getElementById('life-high'),
-    hainan: document.getElementById('life-hainan')
-  };
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  const lightboxPrev = document.getElementById('lightbox-prev');
-  const lightboxNext = document.getElementById('lightbox-next');
-  const lightboxStage = document.getElementById('lightbox-stage');
-  const viewState = { key: null, index: 0 };
-
-  function renderGrid(key) {
-    const featuredGrid = document.getElementById(`grid-${key}-featured`);
-    const moreGrid = document.getElementById(`grid-${key}-more`);
-    const folder = lifeFolders[key];
-    const files = lifeData[key];
-    const featured = files.slice(0, 4);
-    const rest = files.slice(4);
-
-    featuredGrid.innerHTML = featured.map((file, index) => `
-      <div class="photo-card">
-        <img loading="lazy" src="${folder}/${file}" alt="${file}" data-life-key="${key}" data-life-index="${index}" />
-      </div>
-    `).join('');
-
-    moreGrid.innerHTML = rest.map((file, index) => `
-      <div class="photo-card">
-        <img loading="lazy" src="${folder}/${file}" alt="${file}" data-life-key="${key}" data-life-index="${index + 4}" />
-      </div>
-    `).join('');
-  }
-
-  Object.keys(lifeData).forEach(renderGrid);
-
-  function getCurrentItems() {
-    if (!viewState.key) return [];
-    return lifeData[viewState.key].map((file) => ({
-      src: `${lifeFolders[viewState.key]}/${file}`,
-      caption: file
-    }));
-  }
-
-  function renderLightbox() {
-    const items = getCurrentItems();
-    const current = items[viewState.index];
-    if (!current) return;
-    lightboxImg.src = current.src;
-    lightboxImg.alt = current.caption || '放大预览';
-    lightboxCaption.textContent = current.caption || '';
-  }
-
-  function openLightbox(key, index) {
-    viewState.key = key;
-    viewState.index = index;
-    renderLightbox();
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden', 'false');
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    lightboxImg.src = '';
-    lightboxCaption.textContent = '';
-  }
-
-  function showPrev() {
-    const items = getCurrentItems();
-    if (!items.length) return;
-    viewState.index = (viewState.index - 1 + items.length) % items.length;
-    renderLightbox();
-  }
-
-  function showNext() {
-    const items = getCurrentItems();
-    if (!items.length) return;
-    viewState.index = (viewState.index + 1) % items.length;
-    renderLightbox();
-  }
-
-  document.querySelectorAll('.photo-card img').forEach((img) => {
-    img.addEventListener('click', () => {
-      openLightbox(img.dataset.lifeKey, Number(img.dataset.lifeIndex || 0));
-    });
-  });
-
-  document.querySelectorAll('.life-toggle').forEach((button) => {
-    button.addEventListener('click', () => {
-      const key = button.dataset.lifeToggle;
-      const more = document.getElementById(`grid-${key}-more`);
-      const t = translations[getLang()] || translations['zh-CN'];
-      const expanded = more.classList.toggle('open');
-      button.dataset.expanded = expanded ? 'true' : 'false';
-      button.textContent = expanded ? t.collapse : t.expandMore;
-    });
-  });
-
-  lightboxPrev.addEventListener('click', (event) => {
-    event.stopPropagation();
-    showPrev();
-  });
-  lightboxNext.addEventListener('click', (event) => {
-    event.stopPropagation();
-    showNext();
-  });
-  lightbox.addEventListener('click', closeLightbox);
-  lightboxStage.addEventListener('click', (event) => {
-    if (event.target === lightboxStage) closeLightbox();
-  });
-  lightboxImg.addEventListener('click', (event) => {
-    event.stopPropagation();
-    closeLightbox();
-  });
-  document.addEventListener('keydown', (event) => {
-    if (!lightbox.classList.contains('open')) return;
-    if (event.key === 'Escape') {
-      closeLightbox();
-    } else if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      showPrev();
-    } else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      showNext();
-    }
-  });
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const key = tab.dataset.lifeTab;
-      tabs.forEach((item) => item.classList.remove('active'));
-      Object.values(panels).forEach((panel) => panel.classList.remove('active'));
-      tab.classList.add('active');
-      panels[key].classList.add('active');
-    });
-  });
-
-  setLang(getLang(), false);
+applyTheme(localStorage.getItem('site-theme') || 'light');
+setLang(getLang());
 </script>
 </body>
 </html>
